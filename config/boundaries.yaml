@@ -1,0 +1,133 @@
+# Maritime boundary policy for get_maritime_boundaries and the REGULATORY domain.
+#
+# STATUS: the GEOMETRY is authoritative (VLIZ Maritime Boundaries Geodatabase,
+# versioned). The REGULATORY IMPLICATIONS below are ORCA's own encoding of what
+# a containment result means for a small fishing vessel, and are labelled
+# LEGAL_REVIEW_REQUIRED. ORCA output is advisory context, never a legal
+# determination and never navigational authority
+# (12_RISK_AND_RECOMMENDATION_SPEC.md section 7).
+
+source:
+  source_id: S-08
+  name: MarineRegions
+  organisation: Flanders Marine Institute (VLIZ)
+  endpoint: https://geo.vliz.be/geoserver/MarineRegions/wfs
+  access_method: WFS 2.0 GetFeature (GeoJSON) -> local versioned snapshot
+  licence_reference: >-
+    Flanders Marine Institute, Maritime Boundaries Geodatabase.
+    Available online at https://www.marineregions.org/ — CC-BY 4.0.
+    Attribution is mandatory and is carried in provenance.
+  # Verified live on 2026-09-02: unauthenticated GetCapabilities and GetFeature
+  # both returned HTTP 200. No credentials are configured or required.
+
+snapshot:
+  directory: data/boundaries
+  # The snapshot holds every feature whose geometry intersects this region.
+  # Containment inside the region is therefore exact. A query OUTSIDE it returns
+  # INSUFFICIENT_COVERAGE — never "not inside any boundary", which would be a
+  # false negative dressed as an answer.
+  region: {min_lat: 0.0, min_lon: 64.0, max_lat: 26.0, max_lon: 90.0}
+  region_note: >-
+    Covers mainland Indian waters, Lakshadweep, the Gulf of Mannar and Palk Bay,
+    Sri Lanka, the Maldives, Pakistan and Bangladesh. The Andaman and Nicobar
+    EEZ feature is included, but positions east of 90 E are outside the captured
+    region; re-run the capture with a wider --region to cover them.
+
+# Distance from a boundary within which containment is reported but NOT with
+# full confidence, given the precision of the source geometry.
+near_boundary_km: 5.0
+
+# --- boundary types -----------------------------------------------------------
+# A type with `configured: false` is NEVER approximated from another type.
+# An EEZ polygon is not a fishing regulation zone (04 section 3.11, rule 2).
+boundary_types:
+  EEZ:
+    configured: true
+    layer: MarineRegions:eez
+    description: Exclusive Economic Zone (200 NM)
+  territorial_sea:
+    configured: true
+    layer: MarineRegions:eez_12nm
+    description: Territorial sea (12 NM)
+  contiguous_zone:
+    configured: true
+    layer: MarineRegions:eez_24nm
+    description: Contiguous zone (24 NM)
+  internal_waters:
+    configured: true
+    layer: MarineRegions:eez_internal_waters
+    description: Internal waters (landward of the baseline)
+  marine_protected_area:
+    configured: false
+    reason: >-
+      No authoritative MPA dataset is integrated. Protected Planet (S-15) is a
+      P2 item and has not been verified for Indian waters.
+  restricted_zone:
+    configured: false
+    reason: >-
+      Naval exercise areas, port limits and security zones are published by
+      authorities that ORCA does not yet ingest. No source is configured.
+  fishing_regulation_zone:
+    configured: false
+    reason: >-
+      Licensing areas, state fishing limits and seasonal closures are state and
+      national instruments, not boundary geometry. No source is configured.
+  seasonal_closure:
+    configured: false
+    reason: >-
+      The annual monsoon fishing ban is a dated legal instrument issued per
+      state; it is not a polygon and is not derivable from any configured source.
+
+# --- regulatory implications --------------------------------------------------
+# STATUS: LEGAL_REVIEW_REQUIRED. Mapping from a containment result to a
+# regulatory status for a small Indian fishing vessel. The most constraining
+# outcome governs. `none` is what the type implies when the point is inside no
+# feature of that type at all.
+home_jurisdiction: {iso_ter: IND, name: India}
+
+implications:
+  status: LEGAL_REVIEW_REQUIRED
+  rationale: >-
+    Encodes the ordinary reading of UNCLOS for a fishing vessel: a coastal state
+    controls fishing in its own EEZ, and foreign vessels need authorisation.
+    It does NOT encode bilateral agreements, traditional fishing rights, the
+    India–Sri Lanka maritime arrangements, or any licence a particular vessel
+    may hold. It must be reviewed by someone competent in Indian marine law
+    before operational use.
+  types:
+    internal_waters:
+      home: PERMITTED
+      foreign: PROHIBITED
+      none: NOT_CONSTRAINING
+      basis_home: inside Indian internal waters
+      basis_foreign: >-
+        inside another state's internal waters; entry requires that state's
+        authorisation
+    territorial_sea:
+      home: PERMITTED
+      foreign: PROHIBITED
+      none: NOT_CONSTRAINING
+      basis_home: inside India's 12 NM territorial sea
+      basis_foreign: >-
+        inside another state's 12 NM territorial sea; innocent passage does not
+        extend to fishing
+    contiguous_zone:
+      home: PERMITTED
+      foreign: RESTRICTED
+      none: NOT_CONSTRAINING
+      basis_home: inside India's 24 NM contiguous zone
+      basis_foreign: inside another state's 24 NM contiguous zone
+    EEZ:
+      home: PERMITTED
+      foreign: RESTRICTED
+      none: UNKNOWN
+      basis_home: inside the Indian Exclusive Economic Zone
+      basis_foreign: >-
+        inside another state's Exclusive Economic Zone; fishing there requires
+        that state's authorisation
+      # Read as a caveat appended to "outside every EEZ", not as a restatement.
+      basis_none: >-
+        boundary geometry alone cannot say whether that means the high seas or a
+        position on land, because ORCA has no land mask; and high-seas fishery
+        regulation (RFMO and IOTC measures) has no configured source either, so
+        this is reported as unknown and never as permitted

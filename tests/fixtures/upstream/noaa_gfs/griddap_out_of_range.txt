@@ -1,0 +1,4 @@
+Error {
+    code=404;
+    message="Not Found: Your query produced no matching results. Query error: For variable=ugrd10m axis#0=time Constraint=\"[(2027-01-01T06:00:00Z)]\": {0}=\"{1}\" is greater than the axis maximum={2} (and even {3}).=\"Start\" is greater than the axis maximum=2027-01-01T06:00:00Z (and even 2026-09-09T15:00:00Z).";
+}

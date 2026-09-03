@@ -21,6 +21,8 @@ METHODS: dict[str, str] = {
     "ratio_to_local_median": "1.0",
     "temporal_alignment": "1.0",
     "point_in_polygon": "1.0",
+    "distance_to_advisory_line": "1.0",
+    "a_star_route": "1.0",
 }
 
 _CODE_REF = "orca.geospatial"

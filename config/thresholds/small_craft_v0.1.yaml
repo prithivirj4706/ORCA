@@ -15,6 +15,25 @@ required_factors: [official_warning_status, significant_wave_height, wind_speed]
 preferred_factors: [swell_height, lightning, cyclone_distance_km]
 optional_factors: [current_speed, wind_gust]
 
+# Required factors whose ABSENCE caps the verdict instead of blocking it (O-1).
+#
+# An authority check is not a measurement. Without wave height or wind there is
+# no sea state to assess and ORCA must refuse. Without a warning check there IS
+# an assessable sea state -- what is missing is the authority that would
+# override it. Refusing outright withholds usable information; answering
+# without a cap could say "favourable" while a cyclone warning stands.
+#
+# So the verdict is issued and capped: ORCA can say conditions look marginal or
+# worse, and can NEVER say favourable, when it could not check for a warning.
+# The gap is named in every answer and the cap is stated in the rationale.
+# Removing this once IMD credentials exist is the intended end state.
+capping_factors:
+  official_warning_status:
+    cap: marginal
+    reason: >
+      No official warning source was reachable, so this verdict cannot be better
+      than marginal however favourable the model fields look.
+
 factors:
   significant_wave_height:
     unit: m

@@ -1,0 +1,121 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: நிலைமைகள் சாதகமற்றவை.
+  CANNOT_ADVISE: கொடுக்கப்பட்ட நேரத்திற்கும் இடத்திற்கும் இதை மதிப்பிட முடியவில்லை,
+    எனவே பாதுகாப்பானதா என்று கூற மாட்டேன்.
+  DEFER_TO_OFFICIAL: இப்பகுதிக்கு அதிகாரப்பூர்வ கடல் எச்சரிக்கை அமலில் உள்ளது. அதைப்
+    பின்பற்றவும்.
+  DO_NOT_GO: நிலைமைகள் பாதுகாப்பற்றவை. கடலுக்குச் செல்ல வேண்டாம்.
+  PROCEED_WITH_CAUTION: நிலைமைகள் எல்லைநிலையில் உள்ளன. எச்சரிக்கையுடன் செல்லவும்.
+  PROCEED_WITH_CONTEXT: மதிப்பிட முடிந்த பிரிவுகளில் பாதகமான நிலைமைகள் எதுவும் காணப்படவில்லை.
+confidence:
+  HIGH: உயர்
+  LOW: குறைவு
+  MEDIUM: நடுத்தரம்
+domain:
+  FISHING_SUITABILITY: மீன்பிடித்தல் பொருத்தம்
+  REGULATORY: ஒழுங்குமுறை
+  SAFETY: பாதுகாப்பு
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: குளோரோஃபில் விகிதம்
+  contiguous_zone: contiguous zone
+  current_speed: நீரோட்ட வேகம்
+  cyclone_distance_km: புயலுக்கான தூரம்
+  fishing_regulation_zone: fishing regulation zone
+  internal_waters: internal waters
+  lightning: மின்னல்
+  marine_protected_area: marine protected area
+  maritime_boundaries: maritime boundaries
+  maritime_boundary: maritime boundary
+  official_warning_status: அதிகாரப்பூர்வ எச்சரிக்கை
+  pfz_advisory: மீன்பிடி மண்டல அறிவிப்பு
+  pfz_distance_km: மீன்பிடி மண்டலத்திற்கான தூரம்
+  restricted_zone: restricted zone
+  seasonal_closure: seasonal closure
+  significant_wave_height: அலை உயரம்
+  sst_anomaly_abs: sea surface temperature anomaly
+  swell_height: சுவெல் உயரம்
+  territorial_sea: கடல்சார் எல்லை
+  thermal_front_distance_km: distance to thermal front
+  wind_gust: காற்றின் சீற்றம்
+  wind_speed: காற்றின் வேகம்
+geofence:
+  approaching: நீங்கள் {name} {boundary} நெருங்குகிறீர்கள் — {distance} கி.மீ தொலைவில்.
+  inside_constraining: நீங்கள் {name} {boundary} உள்ளே இருக்கிறீர்கள்.
+  leaving: நீங்கள் {name} {boundary} விட்டு வெளியேறவுள்ளீர்கள் — எல்லையிலிருந்து {distance}
+    கி.மீ.
+intent:
+  boundary_check:
+  - எல்லை
+  cyclone_status:
+  - புயல்
+  fishing_suitability:
+  - மீன்
+  - மீன்பிடி
+  ocean_condition:
+  - வானிலை
+  - கடல்
+  - அலை
+  - காற்று
+  route_optimization:
+  - வழி
+  - பாதை
+  - பயணம்
+  safety_check:
+  - பாதுகாப்பு
+  - பாதுகாப்பான
+  warning_lookup:
+  - எச்சரிக்கை
+phrase:
+  assessment_base: '{domain}: {verdict} (நம்பகத்தன்மை {confidence})'
+  disclaimer: இது ஒரு ORCA மதிப்பீடு, அதிகாரப்பூர்வ அறிவிப்பு அல்ல. IMD மற்றும் INCOIS
+    அறிக்கைகளைப் பின்பற்றவும்.
+  limiting_factor: ; தீர்மானிக்கும் காரணி {factor}, {val}
+  missing_required: ; {missing} கிடைக்காததால் தீர்ப்பு வழங்கப்படவில்லை
+  not_checked: '  சரிபார்க்கப்படவில்லை: {not_checked}.'
+  verdict_capped_by: ; {capped} சரிபார்க்க முடியாததால் இந்த நிலையில் வரம்பிடப்பட்டது
+place:
+  கன்னியாகுமரி: kanyakumari
+  கொச்சி: kochi
+  கொல்கத்தா: kolkata
+  கோவா: goa
+  சென்னை: chennai
+  தூத்துக்குடி: tuticorin
+  மங்களூரு: mangalore
+  மும்பை: mumbai
+reason:
+  AUTH_REQUIRED: அனுமதி தேவை
+  DATASET_UNAVAILABLE: தரவுத்தொகுப்பு இல்லை
+  INSUFFICIENT_COVERAGE: போதிய பரப்பு இல்லை
+  NOT_IMPLEMENTED: ஆதாரம் இல்லை
+  NOT_RETRIEVED: பெறப்படவில்லை
+  REPRESENTATIVENESS_MISMATCH: பொருந்தாத தரவு
+  STALE_DATA: பழைய தரவு
+time:
+  evening:
+  - மாலை
+  morning:
+  - காலை
+  now:
+  - இப்போது
+  today:
+  - இன்று
+  tomorrow:
+  - நாளை
+value:
+  inside: உள்ளே
+  outside: வெளியே
+verdict:
+  FAVOURABLE: சாதகம்
+  INSUFFICIENT_EVIDENCE: போதிய சான்று இல்லை
+  MARGINAL: எல்லைநிலை
+  PERMITTED: அனுமதிக்கப்பட்டது
+  PROHIBITED: தடைசெய்யப்பட்டது
+  RESTRICTED: கட்டுப்படுத்தப்பட்டது
+  UNFAVOURABLE: சாதகமற்றது
+  UNKNOWN: தெரியவில்லை
+  UNSAFE: பாதுகாப்பற்றது

@@ -7,7 +7,7 @@ validation status that is surfaced in the answer
 from __future__ import annotations
 
 import pathlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 from typing import Any
 
@@ -51,11 +51,36 @@ class ThresholdSet:
     optional_factors: tuple[str, ...]
     min_usable_factors: int
     factors: dict[str, FactorSpec]
+    #: factor -> {"cap": band, "reason": str}. A required factor listed here
+    #: caps the verdict at `cap` when it is missing, instead of forcing
+    #: INSUFFICIENT_EVIDENCE. See config/thresholds/small_craft_v0.1.yaml.
+    capping_factors: dict[str, dict] = field(default_factory=dict)
     validation_reference: str | None = None
+
+    def cap_for(self, factor: str) -> str | None:
+        entry = self.capping_factors.get(factor)
+        return entry.get("cap") if entry else None
 
     @property
     def validated(self) -> bool:
         return self.status.upper().startswith("VALIDATED")
+
+
+def _capping(raw: dict[str, Any], filename: str) -> dict[str, dict]:
+    """Validate the capping tier: a capping factor must be required, and its cap
+    must be a real band. A typo here would silently widen what ORCA may say."""
+    out = dict(raw.get("capping_factors") or {})
+    required = set(raw.get("required_factors") or ())
+    for factor, entry in out.items():
+        if factor not in required:
+            raise ValueError(f"{filename}: capping factor {factor!r} is not a "
+                             f"required factor; capping a non-required factor "
+                             f"has no meaning")
+        cap = (entry or {}).get("cap")
+        if cap not in BAND_ORDER:
+            raise ValueError(f"{filename}: capping factor {factor!r} has cap "
+                             f"{cap!r}; expected one of {list(BAND_ORDER)}")
+    return out
 
 
 def _spec(name: str, raw: dict[str, Any]) -> FactorSpec:
@@ -89,5 +114,6 @@ def load(set_id: str, config_dir: str | None = None) -> ThresholdSet:
         optional_factors=tuple(raw.get("optional_factors") or ()),
         min_usable_factors=int(raw.get("min_usable_factors", 0)),
         factors={k: _spec(k, v) for k, v in raw["factors"].items()},
+        capping_factors=_capping(raw, path.name),
         validation_reference=raw.get("validation_reference"),
     )

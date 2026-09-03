@@ -1,0 +1,112 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: ସ୍ଥିତି ପ୍ରତିକୂଳ।
+  CANNOT_ADVISE: ଦିଆଯାଇଥିବା ସମୟ ଓ ସ୍ଥାନ ପାଇଁ ମୁଁ ଏହାର ମୂଲ୍ୟାଙ୍କନ କରିପାରିବି ନାହିଁ,
+    ତେଣୁ ନିରାପଦ କି ନାହିଁ କହିବି ନାହିଁ।
+  DEFER_TO_OFFICIAL: ଏହି ଅଞ୍ଚଳ ପାଇଁ ସରକାରୀ ସାମୁଦ୍ରିକ ଚେତାବନୀ ଲାଗୁ ଅଛି। ତାହା ଅନୁସରଣ
+    କରନ୍ତୁ।
+  DO_NOT_GO: ସ୍ଥିତି ଅସୁରକ୍ଷିତ। ସମୁଦ୍ରକୁ ଯାଆନ୍ତୁ ନାହିଁ।
+  PROCEED_WITH_CAUTION: ସ୍ଥିତି ସୀମାନ୍ତ। ସାବଧାନତାର ସହ ଆଗକୁ ବଢ଼ନ୍ତୁ।
+  PROCEED_WITH_CONTEXT: ଯେଉଁ କ୍ଷେତ୍ରଗୁଡ଼ିକର ମୂଲ୍ୟାଙ୍କନ ହୋଇପାରିଲା ସେଥିରେ କୌଣସି ପ୍ରତିକୂଳ
+    ସ୍ଥିତି ମିଳିଲା ନାହିଁ।
+confidence:
+  HIGH: ଉଚ୍ଚ
+  LOW: ନିମ୍ନ
+  MEDIUM: ମଧ୍ୟମ
+domain:
+  FISHING_SUITABILITY: ମତ୍ସ୍ୟଜୀବୀ ଉପଯୋଗିତା
+  REGULATORY: ନିୟନ୍ତ୍ରଣ
+  SAFETY: ସୁରକ୍ଷା
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: କ୍ଲୋରୋଫିଲ ଅନୁପାତ
+  current_speed: ସ୍ରୋତର ବେଗ
+  cyclone_distance_km: ବାତ୍ୟାର ଦୂରତା
+  lightning: ବଜ୍ରପାତ
+  maritime_boundary: maritime boundary
+  official_warning_status: ସରକାରୀ ଚେତାବନୀ
+  pfz_advisory: ମତ୍ସ୍ୟ ଅଞ୍ଚଳ ପରାମର୍ଶ
+  pfz_distance_km: ମତ୍ସ୍ୟ ଅଞ୍ଚଳର ଦୂରତା
+  significant_wave_height: ଢେଉର ଉଚ୍ଚତା
+  swell_height: ସ୍ୱେଲ ଉଚ୍ଚତା
+  territorial_sea: ଆଞ୍ଚଳିକ ସମୁଦ୍ର
+  wind_gust: ପବନର ଝଟକା
+  wind_speed: ପବନର ବେଗ
+geofence:
+  approaching: ଆପଣ {name} {boundary} ନିକଟକୁ ଯାଉଛନ୍ତି — {distance} କି.ମି ଦୂରରେ।
+  inside_constraining: ଆପଣ {name} {boundary} ଭିତରେ ଅଛନ୍ତି।
+  leaving: ଆପଣ {name} {boundary} ଛାଡ଼ୁଛନ୍ତି — ସୀମାରୁ {distance} କି.ମି।
+intent:
+  boundary_check:
+  - ସୀମା
+  cyclone_status:
+  - ବାତ୍ୟା
+  fishing_suitability:
+  - ମାଛ
+  - ମତ୍ସ୍ୟ
+  ocean_condition:
+  - ପାଣିପାଗ
+  - ସମୁଦ୍ର
+  - ଢେଉ
+  - ପବନ
+  route_optimization:
+  - ପଥ
+  - ରାସ୍ତା
+  - ଯାତ୍ରା
+  safety_check:
+  - ନିରାପଦ
+  - ସୁରକ୍ଷା
+  warning_lookup:
+  - ଚେତାବନୀ
+phrase:
+  assessment_base: '{domain}: {verdict} (ବିଶ୍ୱସନୀୟତା {confidence})'
+  disclaimer: ଏହା ଏକ ORCA ମୂଲ୍ୟାଙ୍କନ, ସରକାରୀ ପରାମର୍ଶ ନୁହେଁ। IMD ଏବଂ INCOIS ବୁଲେଟିନ
+    ଅନୁସରଣ କରନ୍ତୁ।
+  limiting_factor: ; ନିର୍ଣ୍ଣାୟକ କାରକ {factor}, {val}
+  missing_required: ; {missing} ଉପଲବ୍ଧ ନଥିବାରୁ କୌଣସି ନିଷ୍ପତ୍ତି ଦିଆଯାଇନାହିଁ
+  not_checked: '  ଯାଞ୍ଚ କରାଯାଇନାହିଁ: {not_checked}.'
+  verdict_capped_by: ; {capped} ଯାଞ୍ଚ କରାଯାଇ ନପାରିବାରୁ ଏହି ସ୍ତରରେ ସୀମିତ
+place:
+  କନ୍ୟାକୁମାରୀ: kanyakumari
+  କୋଚି: kochi
+  କୋଲକାତା: kolkata
+  ଗୋଆ: goa
+  ଚେନ୍ନାଇ: chennai
+  ବିଶାଖାପଟ୍ଟନମ: visakhapatnam
+  ମାଙ୍ଗାଲୋର: mangalore
+  ମୁମ୍ବାଇ: mumbai
+reason:
+  AUTH_REQUIRED: ଅନୁମତି ଆବଶ୍ୟକ
+  DATASET_UNAVAILABLE: ଡାଟାସେଟ୍ ଉପଲବ୍ଧ ନାହିଁ
+  INSUFFICIENT_COVERAGE: ପର୍ଯ୍ୟାପ୍ତ କଭରେଜ୍ ନାହିଁ
+  NOT_IMPLEMENTED: ଉତ୍ସ ଉପଲବ୍ଧ ନାହିଁ
+  NOT_RETRIEVED: ମିଳିଲା ନାହିଁ
+  REPRESENTATIVENESS_MISMATCH: ଅସଙ୍ଗତ ତଥ୍ୟ
+  STALE_DATA: ପୁରୁଣା ତଥ୍ୟ
+time:
+  evening:
+  - ସନ୍ଧ୍ୟା
+  morning:
+  - ସକାଳେ
+  now:
+  - ବର୍ତ୍ତମାନ
+  today:
+  - ଆଜି
+  tomorrow:
+  - ଆସନ୍ତାକାଲି
+value:
+  inside: ଭିତରେ
+  outside: ବାହାରେ
+verdict:
+  FAVOURABLE: ଅନୁକୂଳ
+  INSUFFICIENT_EVIDENCE: ପର୍ଯ୍ୟାପ୍ତ ପ୍ରମାଣ ନାହିଁ
+  MARGINAL: ସୀମାନ୍ତ
+  PERMITTED: ଅନୁମୋଦିତ
+  PROHIBITED: ନିଷିଦ୍ଧ
+  RESTRICTED: ସୀମିତ
+  UNFAVOURABLE: ପ୍ରତିକୂଳ
+  UNKNOWN: ଅଜଣା
+  UNSAFE: ଅସୁରକ୍ଷିତ

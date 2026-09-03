@@ -1,0 +1,42 @@
+confidence:
+  HIGH: high
+  LOW: low
+  MEDIUM: medium
+domain:
+  FISHING_SUITABILITY: Fishing Suitability
+  REGULATORY: Regulatory
+  SAFETY: Safety
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  maritime_boundary: maritime boundary
+  official_warning_status: official warning status
+  significant_wave_height: significant wave height
+  territorial_sea: territorial sea
+  wind_speed: wind speed
+phrase:
+  assessment_base: '{domain}: {verdict} (confidence {confidence})'
+  disclaimer: This is an ORCA assessment, not an official advisory. Follow IMD and
+    INCOIS bulletins.
+  limiting_factor: ; limiting factor {factor} at {val}
+  missing_required: ; no verdict issued for want of {missing}
+  not_checked: '  Not checked: {not_checked}.'
+  verdict_capped_by: ; capped at this level because {capped} could not be checked
+reason:
+  AUTH_REQUIRED: Auth Required
+  DATASET_UNAVAILABLE: Dataset Unavailable
+  INSUFFICIENT_COVERAGE: Insufficient Coverage
+  NOT_RETRIEVED: Not Retrieved
+  STALE_DATA: Stale Data
+value:
+  inside: inside
+  outside: outside
+verdict:
+  FAVOURABLE: Favourable
+  INSUFFICIENT_EVIDENCE: Insufficient Evidence
+  MARGINAL: Marginal
+  PERMITTED: Permitted
+  PROHIBITED: Prohibited
+  RESTRICTED: Restricted
+  UNKNOWN: Unknown
+  UNSAFE: Unsafe

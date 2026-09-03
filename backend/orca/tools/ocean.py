@@ -80,15 +80,73 @@ def get_sst(lat: float, lon: float, valid_time: datetime, *,
     return _dual_source("get_sst", variables, lat, lon, valid_time, adapter, cmems)
 
 
+def _append_local_ratio(env: OrcaEnvelope, cmems: CmemsAdapter, lat: float,
+                        lon: float, valid_time: datetime,
+                        radius_km: float) -> None:
+    """Append chlorophyll expressed against the median of its own local field.
+
+    12_RISK_AND_RECOMMENDATION_SPEC.md section 5.3 forbids "chlorophyll is
+    high": ORCA has no validated absolute standard, so the assessment factor is
+    comparative. The local field must come from the SAME source as the point
+    value, or the ratio would compare two different instruments.
+
+    Failure here is silent by design -- the point value is still a good result,
+    and the ratio is simply absent from the evidence rather than faked.
+    """
+    from ..adapters.cmems.adapter import CmemsError
+    from ..geospatial.derive import derive_ratio_to_local_median
+
+    obs = next((d for d in env.data if getattr(d, "parameter", None)
+                == "chlorophyll_a"), None)
+    if obs is None:
+        return
+    prov = next((p for p in env.provenance
+                 if p.provenance_id == obs.provenance_id), None)
+    if prov is None or prov.source_id != CMEMS_SOURCE:
+        return
+    try:
+        values, _, _, n_cells = cmems.fetch_local_field(
+            "chlorophyll_a", lat, lon, valid_time, radius_km)
+        result, rprov = derive_ratio_to_local_median(
+            obs, prov, values, radius_km, n_cells)
+    except (CmemsError, ValueError):
+        return
+    env.data.append(result)
+    env.provenance.append(rprov)
+
+
 def get_chlorophyll(lat: float, lon: float, valid_time: datetime, *,
                     variables: Sequence[str] = ("chlorophyll_a",),
                     adapter: IncoisErddapAdapter | None = None,
-                    cmems: CmemsAdapter | None = None) -> OrcaEnvelope:
+                    cmems: CmemsAdapter | None = None,
+                    local_median_radius_km: float | None = 100.0) -> OrcaEnvelope:
     """P0. Chlorophyll-a for productivity reasoning.
 
     Primary INCOIS ERDDAP (`incois_oceansat2_datasets`, coverage ends
     2020-05-01); fallback CMEMS multi-sensor gap-free daily L4, which is current
     and publishes a per-pixel uncertainty percentage.
+
+    When the point value is served by CMEMS the tool also derives
+    `chlorophyll_ratio_to_local_median`, which is the factor the assessment
+    engine actually consumes. The derivation lives here rather than in the
+    caller so that every consumer of this capability gets the same evidence.
     """
-    return _dual_source("get_chlorophyll", variables, lat, lon, valid_time,
-                        adapter, cmems)
+    own_e, own_c = adapter is None, cmems is None
+    erddap = adapter or IncoisErddapAdapter()
+    cmems = cmems or CmemsAdapter()
+    try:
+        env = collect_from_sources(
+            "get_chlorophyll", variables, lat, lon, valid_time,
+            [(INCOIS_SOURCE,
+              lambda sid, p: erddap.fetch_point(p, lat, lon, valid_time)),
+             (CMEMS_SOURCE,
+              lambda sid, p: cmems.fetch_point(p, lat, lon, valid_time))])
+        if local_median_radius_km:
+            _append_local_ratio(env, cmems, lat, lon, valid_time,
+                                local_median_radius_km)
+        return env
+    finally:
+        if own_e:
+            erddap.close()
+        if own_c:
+            cmems.close()

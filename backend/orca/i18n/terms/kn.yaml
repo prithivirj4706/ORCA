@@ -1,0 +1,110 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: ಪರಿಸ್ಥಿತಿ ಪ್ರತಿಕೂಲವಾಗಿದೆ.
+  CANNOT_ADVISE: ನೀಡಿದ ಸಮಯ ಮತ್ತು ಸ್ಥಳಕ್ಕೆ ಇದನ್ನು ಮೌಲ್ಯಮಾಪನ ಮಾಡಲಾಗದು, ಆದ್ದರಿಂದ ಸುರಕ್ಷಿತವೇ
+    ಎಂದು ಹೇಳುವುದಿಲ್ಲ.
+  DEFER_TO_OFFICIAL: ಈ ಪ್ರದೇಶಕ್ಕೆ ಅಧಿಕೃತ ಸಮುದ್ರ ಎಚ್ಚರಿಕೆ ಜಾರಿಯಲ್ಲಿದೆ. ಅದನ್ನು ಅನುಸರಿಸಿ.
+  DO_NOT_GO: ಪರಿಸ್ಥಿತಿ ಅಸುರಕ್ಷಿತ. ಸಮುದ್ರಕ್ಕೆ ಹೋಗಬೇಡಿ.
+  PROCEED_WITH_CAUTION: ಪರಿಸ್ಥಿತಿ ಸೀಮಾಂತವಾಗಿದೆ. ಎಚ್ಚರಿಕೆಯಿಂದ ಮುಂದುವರಿಯಿರಿ.
+  PROCEED_WITH_CONTEXT: ಮೌಲ್ಯಮಾಪನ ಮಾಡಬಹುದಾದ ಕ್ಷೇತ್ರಗಳಲ್ಲಿ ಪ್ರತಿಕೂಲ ಪರಿಸ್ಥಿತಿ ಕಂಡುಬಂದಿಲ್ಲ.
+confidence:
+  HIGH: ಹೆಚ್ಚು
+  LOW: ಕಡಿಮೆ
+  MEDIUM: ಮಧ್ಯಮ
+domain:
+  FISHING_SUITABILITY: ಮೀನುಗಾರಿಕೆ ಸೂಕ್ತತೆ
+  REGULATORY: ನಿಯಂತ್ರಣ
+  SAFETY: ಸುರಕ್ಷತೆ
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: ಕ್ಲೋರೊಫಿಲ್ ಅನುಪಾತ
+  current_speed: ಪ್ರವಾಹದ ವೇಗ
+  cyclone_distance_km: ಚಂಡಮಾರುತದ ದೂರ
+  lightning: ಸಿಡಿಲು
+  maritime_boundary: maritime boundary
+  official_warning_status: ಅಧಿಕೃತ ಎಚ್ಚರಿಕೆ
+  pfz_advisory: ಮೀನುಗಾರಿಕೆ ವಲಯ ಸಲಹೆ
+  pfz_distance_km: ಮೀನುಗಾರಿಕೆ ವಲಯದ ದೂರ
+  significant_wave_height: ಅಲೆಯ ಎತ್ತರ
+  swell_height: ಸ್ವೆಲ್ ಎತ್ತರ
+  territorial_sea: ಪ್ರಾದೇಶಿಕ ಸಮುದ್ರ
+  wind_gust: ಗಾಳಿಯ ರಭಸ
+  wind_speed: ಗಾಳಿಯ ವೇಗ
+geofence:
+  approaching: ನೀವು {name} {boundary} ಸಮೀಪಿಸುತ್ತಿದ್ದೀರಿ — {distance} ಕಿ.ಮೀ ದೂರದಲ್ಲಿ.
+  inside_constraining: ನೀವು {name} {boundary} ಒಳಗೆ ಇದ್ದೀರಿ.
+  leaving: ನೀವು {name} {boundary} ಬಿಟ್ಟು ಹೋಗುತ್ತಿದ್ದೀರಿ — ಅಂಚಿನಿಂದ {distance} ಕಿ.ಮೀ.
+intent:
+  boundary_check:
+  - ಗಡಿ
+  cyclone_status:
+  - ಚಂಡಮಾರುತ
+  fishing_suitability:
+  - ಮೀನು
+  - ಮತ್ಸ್ಯ
+  ocean_condition:
+  - ಹವಾಮಾನ
+  - ಸಮುದ್ರ
+  - ಅಲೆ
+  - ಗಾಳಿ
+  route_optimization:
+  - ಮಾರ್ಗ
+  - ದಾರಿ
+  - ಪ್ರಯಾಣ
+  safety_check:
+  - ಸುರಕ್ಷಿತ
+  - ಸುರಕ್ಷತೆ
+  warning_lookup:
+  - ಎಚ್ಚರಿಕೆ
+phrase:
+  assessment_base: '{domain}: {verdict} (ವಿಶ್ವಾಸಾರ್ಹತೆ {confidence})'
+  disclaimer: ಇದು ORCA ಮೌಲ್ಯಮಾಪನ, ಅಧಿಕೃತ ಸಲಹೆ ಅಲ್ಲ. IMD ಮತ್ತು INCOIS ಬುಲೆಟಿನ್‌ಗಳನ್ನು
+    ಅನುಸರಿಸಿ.
+  limiting_factor: ; ನಿರ್ಣಾಯಕ ಅಂಶ {factor}, {val}
+  missing_required: ; {missing} ಲಭ್ಯವಿಲ್ಲದ ಕಾರಣ ತೀರ್ಪು ನೀಡಿಲ್ಲ
+  not_checked: '  ಪರಿಶೀಲಿಸಲಾಗಿಲ್ಲ: {not_checked}.'
+  verdict_capped_by: ; {capped} ಪರಿಶೀಲಿಸಲಾಗದ ಕಾರಣ ಈ ಮಟ್ಟಕ್ಕೆ ಸೀಮಿತ
+place:
+  ಕನ್ಯಾಕುಮಾರಿ: kanyakumari
+  ಕೊಚ್ಚಿ: kochi
+  ಕೋಲ್ಕತ್ತಾ: kolkata
+  ಗೋವಾ: goa
+  ಚೆನ್ನೈ: chennai
+  ಮಂಗಳೂರು: mangalore
+  ಮುಂಬೈ: mumbai
+  ವಿಶಾಖಪಟ್ಟಣಂ: visakhapatnam
+reason:
+  AUTH_REQUIRED: ಅನುಮತಿ ಅಗತ್ಯ
+  DATASET_UNAVAILABLE: ಡೇಟಾಸೆಟ್ ಲಭ್ಯವಿಲ್ಲ
+  INSUFFICIENT_COVERAGE: ಸಾಕಷ್ಟು ವ್ಯಾಪ್ತಿ ಇಲ್ಲ
+  NOT_IMPLEMENTED: ಮೂಲ ಲಭ್ಯವಿಲ್ಲ
+  NOT_RETRIEVED: ಪಡೆಯಲಾಗಿಲ್ಲ
+  REPRESENTATIVENESS_MISMATCH: ಹೊಂದಿಕೆಯಾಗದ ಡೇಟಾ
+  STALE_DATA: ಹಳೆಯ ಡೇಟಾ
+time:
+  evening:
+  - ಸಂಜೆ
+  morning:
+  - ಬೆಳಿಗ್ಗೆ
+  now:
+  - ಈಗ
+  today:
+  - ಇಂದು
+  tomorrow:
+  - ನಾಳೆ
+value:
+  inside: ಒಳಗೆ
+  outside: ಹೊರಗೆ
+verdict:
+  FAVOURABLE: ಅನುಕೂಲ
+  INSUFFICIENT_EVIDENCE: ಸಾಕಷ್ಟು ಪುರಾವೆ ಇಲ್ಲ
+  MARGINAL: ಸೀಮಾಂತ
+  PERMITTED: ಅನುಮತಿಸಲಾಗಿದೆ
+  PROHIBITED: ನಿಷೇಧಿತ
+  RESTRICTED: ನಿರ್ಬಂಧಿತ
+  UNFAVOURABLE: ಪ್ರತಿಕೂಲ
+  UNKNOWN: ತಿಳಿದಿಲ್ಲ
+  UNSAFE: ಅಸುರಕ್ಷಿತ

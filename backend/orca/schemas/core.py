@@ -47,10 +47,11 @@ class BBox(BaseModel):
 
 class SpatialRef(BaseModel):
     """Where a value applies. CRS is always explicit; never assumed."""
-    kind: Literal["point", "bbox", "grid", "geometry"]
+    kind: Literal["point", "bbox", "grid", "geometry", "linestring"]
     crs: str = WGS84
     lat: float | None = None
     lon: float | None = None
+    coordinates: list[list[float]] | None = None  # For linestrings: [[lon, lat], [lon, lat], ...]
     bbox: BBox | None = None
     depth_m: float | None = None                 # positive downward
     nearest_node_distance_km: float | None = None
@@ -65,6 +66,9 @@ class SpatialRef(BaseModel):
                 raise ValueError("INVALID_LOCATION: point requires lat and lon")
             if not (-90 <= self.lat <= 90 and -180 <= self.lon <= 180):
                 raise ValueError("INVALID_LOCATION: out of range")
+        if self.kind == "linestring":
+            if not self.coordinates or len(self.coordinates) < 2:
+                raise ValueError("INVALID_LOCATION: linestring requires at least 2 coordinates")
         if self.kind in ("bbox", "grid") and self.bbox is None:
             raise ValueError("INVALID_BBOX: bbox required")
         return self

@@ -1,0 +1,70 @@
+Attributes {
+  time {
+    String _CoordinateAxisType "Time";
+    Float64 actual_range 1.669896e+9, 1.788966e+9;
+    String axis "T";
+    String calendar "proleptic_gregorian";
+    String ioos_category "Time";
+    String long_name "Forecast time for ForecastModelRunCollection";
+    Float64 missing_value NaN;
+    String standard_name "time";
+    String time_origin "01-JAN-1970 00:00:00";
+    String units "seconds since 1970-01-01T00:00:00Z";
+  }
+  latitude {
+    String _CoordinateAxisType "Lat";
+    Float64 actual_range -90.0, 90.0;
+    String axis "Y";
+    String ioos_category "Location";
+    String long_name "Latitude";
+    String standard_name "latitude";
+    String stored_direction "decreasing";
+    String units "degrees_north";
+  }
+  longitude {
+    String _CoordinateAxisType "Lon";
+    Float64 actual_range 0.0, 359.5;
+    String axis "X";
+    String ioos_category "Location";
+    String long_name "Longitude";
+    String standard_name "longitude";
+    String units "degrees_east";
+  }
+  tmpsfc {
+    Float32 _FillValue -9.99e+8;
+    Float64 colorBarMaximum 318.15;
+    Float64 colorBarMinimum 228.15;
+    String coordinates "time_run time latitude longitude";
+    String ioos_category "Temperature";
+    String long_name "surface air temperature";
+    String standard_name "surface_temperature";
+    String units "K";
+  }
+  tmp2m {
+    Float32 _FillValue -9.99e+8;
+    Float64 colorBarMaximum 318.15;
+    Float64 colorBarMinimum 228.15;
+    String coordinates "time_run time latitude longitude";
+    String ioos_category "Temperature";
+    String long_name "air temperature at 2m";
+    String standard_name "air_temperature";
+    String units "K";
+  }
+  ugrd10m {
+    Float32 _FillValue -9.99e+8;
+    Float64 colorBarMaximum 20.0;
+    Float64 colorBarMinimum -20.0;
+    String coordinates "time_run time latitude longitude";
+    String ioos_category "Wind";
+    String long_name "eastward wind velocity at 10m";
+    String standard_name "eastward_wind";
+    String units "m s-1";
+  }
+  vgrd10m {
+    Float32 _FillValue -9.99e+8;
+    Float64 colorBarMaximum 20.0;
+    Float64 colorBarMinimum -20.0;
+    String coordinates "time_run time latitude longitude";
+    String ioos_category "Wind";
+    String long_name "northward wind velocity at 10m";
+    String standard_name "northward_wind";

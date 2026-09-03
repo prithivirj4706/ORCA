@@ -1,0 +1,111 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: સ્થિતિ પ્રતિકૂળ છે.
+  CANNOT_ADVISE: આપેલા સમય અને સ્થળ માટે હું આનું મૂલ્યાંકન કરી શકતો નથી, તેથી સુરક્ષિત
+    છે કે નહીં તે કહીશ નહીં.
+  DEFER_TO_OFFICIAL: આ વિસ્તાર માટે સત્તાવાર દરિયાઈ ચેતવણી અમલમાં છે. તેને અનુસરો.
+  DO_NOT_GO: સ્થિતિ અસુરક્ષિત છે. દરિયામાં ન જાઓ.
+  PROCEED_WITH_CAUTION: સ્થિતિ સીમાંત છે. સાવધાનીથી આગળ વધો.
+  PROCEED_WITH_CONTEXT: જે ક્ષેત્રોનું મૂલ્યાંકન થઈ શક્યું તેમાં કોઈ પ્રતિકૂળ સ્થિતિ
+    મળી નથી.
+confidence:
+  HIGH: ઊંચી
+  LOW: નીચી
+  MEDIUM: મધ્યમ
+domain:
+  FISHING_SUITABILITY: માછીમારી અનુકૂળતા
+  REGULATORY: નિયમન
+  SAFETY: સલામતી
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: ક્લોરોફિલ ગુણોત્તર
+  current_speed: પ્રવાહની ઝડપ
+  cyclone_distance_km: વાવાઝોડાનું અંતર
+  lightning: વીજળી
+  maritime_boundary: maritime boundary
+  official_warning_status: સત્તાવાર ચેતવણી
+  pfz_advisory: મત્સ્ય ક્ષેત્ર સલાહ
+  pfz_distance_km: મત્સ્ય ક્ષેત્રનું અંતર
+  significant_wave_height: મોજાની ઊંચાઈ
+  swell_height: સ્વેલ ઊંચાઈ
+  territorial_sea: પ્રાદેશિક સમુદ્ર
+  wind_gust: પવનનો ઝપાટો
+  wind_speed: પવનની ઝડપ
+geofence:
+  approaching: તમે {name} {boundary} નજીક જઈ રહ્યા છો — {distance} કિમી દૂર.
+  inside_constraining: તમે {name} {boundary} ની અંદર છો.
+  leaving: તમે {name} {boundary} છોડી રહ્યા છો — કિનારેથી {distance} કિમી.
+intent:
+  boundary_check:
+  - સીમા
+  cyclone_status:
+  - વાવાઝોડું
+  fishing_suitability:
+  - માછલી
+  - મત્સ્ય
+  ocean_condition:
+  - હવામાન
+  - સમુદ્ર
+  - મોજા
+  - પવન
+  route_optimization:
+  - માર્ગ
+  - રસ્તો
+  - મુસાફરી
+  safety_check:
+  - સુરક્ષિત
+  - સલામતી
+  warning_lookup:
+  - ચેતવણી
+phrase:
+  assessment_base: '{domain}: {verdict} (વિશ્વસનીયતા {confidence})'
+  disclaimer: આ ORCA મૂલ્યાંકન છે, સત્તાવાર સલાહ નથી. IMD અને INCOIS બુલેટિન અનુસરો.
+  limiting_factor: ; નિર્ણાયક પરિબળ {factor}, {val}
+  missing_required: ; {missing} ઉપલબ્ધ ન હોવાથી કોઈ ચુકાદો આપ્યો નથી
+  not_checked: '  ચકાસ્યું નથી: {not_checked}.'
+  verdict_capped_by: ; {capped} ચકાસી ન શકાયાથી આ સ્તરે મર્યાદિત
+place:
+  કન્યાકુમારી: kanyakumari
+  કોચી: kochi
+  કોલકાતા: kolkata
+  ગોવા: goa
+  ચેન્નાઈ: chennai
+  મુંબઈ: mumbai
+  મેંગલોર: mangalore
+  વિશાખાપટ્ટનમ: visakhapatnam
+reason:
+  AUTH_REQUIRED: પરવાનગી જરૂરી
+  DATASET_UNAVAILABLE: ડેટાસેટ ઉપલબ્ધ નથી
+  INSUFFICIENT_COVERAGE: પૂરતું કવરેજ નથી
+  NOT_IMPLEMENTED: સ્રોત ઉપલબ્ધ નથી
+  NOT_RETRIEVED: મળ્યું નથી
+  REPRESENTATIVENESS_MISMATCH: અસંગત ડેટા
+  STALE_DATA: જૂનો ડેટા
+time:
+  evening:
+  - સાંજે
+  morning:
+  - સવારે
+  now:
+  - અત્યારે
+  today:
+  - આજે
+  tomorrow:
+  - આવતીકાલે
+  - કાલે
+value:
+  inside: અંદર
+  outside: બહાર
+verdict:
+  FAVOURABLE: અનુકૂળ
+  INSUFFICIENT_EVIDENCE: પૂરતા પુરાવા નથી
+  MARGINAL: સીમાંત
+  PERMITTED: માન્ય
+  PROHIBITED: નિષિદ્ધ
+  RESTRICTED: પ્રતિબંધિત
+  UNFAVOURABLE: પ્રતિકૂળ
+  UNKNOWN: અજ્ઞાત
+  UNSAFE: અસુરક્ષિત

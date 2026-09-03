@@ -1,0 +1,111 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: परिस्थिती प्रतिकूल आहे.
+  CANNOT_ADVISE: दिलेल्या वेळेसाठी आणि ठिकाणासाठी मी हे मूल्यांकन करू शकत नाही, त्यामुळे
+    सुरक्षित आहे का हे सांगणार नाही.
+  DEFER_TO_OFFICIAL: या भागासाठी अधिकृत सागरी इशारा लागू आहे. त्याचे पालन करा.
+  DO_NOT_GO: परिस्थिती असुरक्षित आहे. समुद्रात जाऊ नका.
+  PROCEED_WITH_CAUTION: परिस्थिती सीमांत आहे. सावधगिरीने पुढे जा.
+  PROCEED_WITH_CONTEXT: मूल्यांकन करता आलेल्या क्षेत्रांत प्रतिकूल परिस्थिती आढळली
+    नाही.
+confidence:
+  HIGH: उच्च
+  LOW: कमी
+  MEDIUM: मध्यम
+domain:
+  FISHING_SUITABILITY: मासेमारी उपयुक्तता
+  REGULATORY: नियमन
+  SAFETY: सुरक्षा
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: क्लोरोफिल गुणोत्तर
+  current_speed: प्रवाहाचा वेग
+  cyclone_distance_km: चक्रीवादळाचे अंतर
+  lightning: वीज
+  maritime_boundary: maritime boundary
+  official_warning_status: अधिकृत इशारा
+  pfz_advisory: मत्स्य क्षेत्र सल्ला
+  pfz_distance_km: मत्स्य क्षेत्राचे अंतर
+  significant_wave_height: लाटेची उंची
+  swell_height: स्वेल उंची
+  territorial_sea: प्रादेशिक समुद्र
+  wind_gust: वाऱ्याचा झोत
+  wind_speed: वाऱ्याचा वेग
+geofence:
+  approaching: तुम्ही {name} {boundary} जवळ जात आहात — {distance} किमी अंतरावर.
+  inside_constraining: तुम्ही {name} {boundary} च्या आत आहात.
+  leaving: तुम्ही {name} {boundary} सोडत आहात — सीमेपासून {distance} किमी.
+intent:
+  boundary_check:
+  - सीमा
+  cyclone_status:
+  - चक्रीवादळ
+  fishing_suitability:
+  - मासे
+  - मत्स्य
+  - मासेमारी
+  ocean_condition:
+  - हवामान
+  - समुद्र
+  - लाट
+  - वारा
+  route_optimization:
+  - मार्ग
+  - रस्ता
+  - प्रवास
+  safety_check:
+  - सुरक्षित
+  - सुरक्षा
+  warning_lookup:
+  - इशारा
+phrase:
+  assessment_base: '{domain}: {verdict} (विश्वासार्हता {confidence})'
+  disclaimer: हे ORCA मूल्यांकन आहे, अधिकृत सल्ला नाही. IMD आणि INCOIS बुलेटिन पाळा.
+  limiting_factor: ; निर्णायक घटक {factor}, {val}
+  missing_required: ; {missing} उपलब्ध नसल्याने निर्णय दिलेला नाही
+  not_checked: '  तपासले नाही: {not_checked}.'
+  verdict_capped_by: ; {capped} तपासता न आल्याने याच पातळीवर मर्यादित
+place:
+  कन्याकुमारी: kanyakumari
+  कोची: kochi
+  कोलकाता: kolkata
+  गोवा: goa
+  चेन्नई: chennai
+  मंगळुरू: mangalore
+  मुंबई: mumbai
+  विशाखापट्टणम: visakhapatnam
+reason:
+  AUTH_REQUIRED: परवानगी आवश्यक
+  DATASET_UNAVAILABLE: डेटासेट उपलब्ध नाही
+  INSUFFICIENT_COVERAGE: पुरेसे कव्हरेज नाही
+  NOT_IMPLEMENTED: स्रोत उपलब्ध नाही
+  NOT_RETRIEVED: मिळाले नाही
+  REPRESENTATIVENESS_MISMATCH: विसंगत डेटा
+  STALE_DATA: जुना डेटा
+time:
+  evening:
+  - संध्याकाळी
+  morning:
+  - सकाळी
+  now:
+  - आत्ता
+  today:
+  - आज
+  tomorrow:
+  - उद्या
+value:
+  inside: आत
+  outside: बाहेर
+verdict:
+  FAVOURABLE: अनुकूल
+  INSUFFICIENT_EVIDENCE: पुरेसा पुरावा नाही
+  MARGINAL: सीमांत
+  PERMITTED: अनुमत
+  PROHIBITED: निषिद्ध
+  RESTRICTED: प्रतिबंधित
+  UNFAVOURABLE: प्रतिकूल
+  UNKNOWN: अज्ञात
+  UNSAFE: असुरक्षित

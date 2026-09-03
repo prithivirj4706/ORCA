@@ -1,0 +1,80 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: REVIEWED
+category:
+  AVOID: Conditions are unfavourable.
+  CANNOT_ADVISE: I cannot assess this for the time and place given, so I will not
+    say whether it is safe.
+  DEFER_TO_OFFICIAL: An official marine warning is in force for this area. Follow
+    it.
+  DO_NOT_GO: Conditions are unsafe. Do not venture out.
+  PROCEED_WITH_CAUTION: Conditions are marginal. Proceed with caution.
+  PROCEED_WITH_CONTEXT: No adverse conditions were identified in the domains that
+    could be assessed.
+confidence:
+  HIGH: high
+  LOW: low
+  MEDIUM: medium
+domain:
+  FISHING_SUITABILITY: Fishing Suitability
+  REGULATORY: Regulatory
+  SAFETY: Safety
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: chlorophyll vs local median
+  contiguous_zone: contiguous zone
+  current_speed: current speed
+  cyclone_distance_km: distance to cyclone
+  fishing_regulation_zone: fishing regulation zone
+  internal_waters: internal waters
+  lightning: lightning
+  marine_protected_area: marine protected area
+  maritime_boundaries: maritime boundaries
+  maritime_boundary: maritime boundary
+  official_warning_status: official warning status
+  pfz_advisory: fishing zone advisory
+  pfz_distance_km: distance to fishing zone advisory
+  restricted_zone: restricted zone
+  seasonal_closure: seasonal closure
+  significant_wave_height: significant wave height
+  sst_anomaly_abs: sea surface temperature anomaly
+  swell_height: swell height
+  territorial_sea: territorial sea
+  thermal_front_distance_km: distance to thermal front
+  wind_gust: wind gust
+  wind_speed: wind speed
+geofence:
+  approaching: You are approaching the {name} {boundary} — {distance} km away.
+  inside_constraining: You are inside the {name} {boundary}.
+  leaving: You are close to leaving the {name} {boundary} — {distance} km from the
+    edge.
+intent: {}
+phrase:
+  assessment_base: '{domain}: {verdict} (confidence {confidence})'
+  disclaimer: This is an ORCA assessment, not an official advisory. Follow IMD and
+    INCOIS bulletins.
+  limiting_factor: ; limiting factor {factor} at {val}
+  missing_required: ; no verdict issued for want of {missing}
+  not_checked: '  Not checked: {not_checked}.'
+  verdict_capped_by: ; capped at this level because {capped} could not be checked
+place: {}
+reason:
+  AUTH_REQUIRED: Auth Required
+  DATASET_UNAVAILABLE: Dataset Unavailable
+  INSUFFICIENT_COVERAGE: Insufficient Coverage
+  NOT_RETRIEVED: Not Retrieved
+  STALE_DATA: Stale Data
+time: {}
+value:
+  inside: inside
+  outside: outside
+verdict:
+  FAVOURABLE: Favourable
+  INSUFFICIENT_EVIDENCE: Insufficient Evidence
+  MARGINAL: Marginal
+  PERMITTED: Permitted
+  PROHIBITED: Prohibited
+  RESTRICTED: Restricted
+  UNKNOWN: Unknown
+  UNSAFE: Unsafe

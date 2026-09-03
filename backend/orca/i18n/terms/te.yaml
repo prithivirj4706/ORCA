@@ -1,0 +1,111 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: పరిస్థితులు ప్రతికూలంగా ఉన్నాయి.
+  CANNOT_ADVISE: ఇచ్చిన సమయం మరియు ప్రదేశానికి దీన్ని అంచనా వేయలేను, కాబట్టి సురక్షితమా
+    అని చెప్పను.
+  DEFER_TO_OFFICIAL: ఈ ప్రాంతానికి అధికారిక సముద్ర హెచ్చరిక అమలులో ఉంది. దాన్ని అనుసరించండి.
+  DO_NOT_GO: పరిస్థితులు సురక్షితం కాదు. సముద్రంలోకి వెళ్లవద్దు.
+  PROCEED_WITH_CAUTION: పరిస్థితులు సరిహద్దు స్థాయిలో ఉన్నాయి. జాగ్రత్తగా వెళ్లండి.
+  PROCEED_WITH_CONTEXT: అంచనా వేయగలిగిన రంగాలలో ప్రతికూల పరిస్థితులు కనిపించలేదు.
+confidence:
+  HIGH: అధిక
+  LOW: తక్కువ
+  MEDIUM: మధ్యస్థ
+domain:
+  FISHING_SUITABILITY: మత్స్య అనుకూలత
+  REGULATORY: నియంత్రణ
+  SAFETY: భద్రత
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: క్లోరోఫిల్ నిష్పత్తి
+  current_speed: ప్రవాహ వేగం
+  cyclone_distance_km: తుఫాను దూరం
+  lightning: పిడుగు
+  maritime_boundary: maritime boundary
+  official_warning_status: అధికారిక హెచ్చరిక
+  pfz_advisory: మత్స్య మండల సలహా
+  pfz_distance_km: మత్స్య మండల దూరం
+  significant_wave_height: అల ఎత్తు
+  swell_height: స్వెల్ ఎత్తు
+  territorial_sea: ప్రాదేశిక సముద్రం
+  wind_gust: గాలి ఉధృతి
+  wind_speed: గాలి వేగం
+geofence:
+  approaching: మీరు {name} {boundary} సమీపిస్తున్నారు — {distance} కి.మీ దూరంలో.
+  inside_constraining: మీరు {name} {boundary} లోపల ఉన్నారు.
+  leaving: మీరు {name} {boundary} నుండి బయటకు వెళ్లబోతున్నారు — అంచు నుండి {distance}
+    కి.మీ.
+intent:
+  boundary_check:
+  - సరిహద్దు
+  cyclone_status:
+  - తుఫాను
+  fishing_suitability:
+  - చేప
+  - మత్స్య
+  - చేపలు
+  ocean_condition:
+  - వాతావరణం
+  - సముద్రం
+  - అల
+  - గాలి
+  route_optimization:
+  - మార్గం
+  - దారి
+  - ప్రయాణం
+  safety_check:
+  - సురక్షిత
+  - భద్రత
+  warning_lookup:
+  - హెచ్చరిక
+phrase:
+  assessment_base: '{domain}: {verdict} (విశ్వసనీయత {confidence})'
+  disclaimer: ఇది ORCA అంచనా, అధికారిక సలహా కాదు. IMD మరియు INCOIS బులెటిన్లను అనుసరించండి.
+  limiting_factor: ; నిర్ణायక కారకం {factor}, {val}
+  missing_required: ; {missing} అందుబాటులో లేనందున తీర్పు ఇవ్వలేదు
+  not_checked: '  తనిఖీ చేయలేదు: {not_checked}.'
+  verdict_capped_by: ; {capped} తనిఖీ చేయలేనందున ఈ స్థాయికి పరిమితం
+place:
+  కన్యాకుమారి: kanyakumari
+  కొచ్చి: kochi
+  కోల్‌కతా: kolkata
+  గోవా: goa
+  చెన్నై: chennai
+  మంగళూరు: mangalore
+  ముంబై: mumbai
+  విశాఖపట్నం: visakhapatnam
+reason:
+  AUTH_REQUIRED: అనుమతి అవసరం
+  DATASET_UNAVAILABLE: డేటాసెట్ అందుబాటులో లేదు
+  INSUFFICIENT_COVERAGE: సరిపడా కవరేజ్ లేదు
+  NOT_IMPLEMENTED: మూలం అందుబాటులో లేదు
+  NOT_RETRIEVED: పొందలేదు
+  REPRESENTATIVENESS_MISMATCH: సరిపోని డేటా
+  STALE_DATA: పాత డేటా
+time:
+  evening:
+  - సాయంత్రం
+  morning:
+  - ఉదయం
+  now:
+  - ఇప్పుడు
+  today:
+  - ఈరోజు
+  tomorrow:
+  - రేపు
+value:
+  inside: లోపల
+  outside: వెలుపల
+verdict:
+  FAVOURABLE: అనుకూలం
+  INSUFFICIENT_EVIDENCE: సరిపడా ఆధారాలు లేవు
+  MARGINAL: సరిహద్దు స్థాయి
+  PERMITTED: అనుమతించబడింది
+  PROHIBITED: నిషేధించబడింది
+  RESTRICTED: పరిమితం
+  UNFAVOURABLE: ప్రతికూలం
+  UNKNOWN: తెలియదు
+  UNSAFE: సురక్షితం కాదు

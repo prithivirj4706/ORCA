@@ -1,0 +1,123 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: स्थितियाँ प्रतिकूल हैं।
+  CANNOT_ADVISE: दिए गए समय और स्थान के लिए मैं इसका आकलन नहीं कर सकता, इसलिए यह नहीं
+    कहूँगा कि यह सुरक्षित है।
+  DEFER_TO_OFFICIAL: इस क्षेत्र के लिए आधिकारिक समुद्री चेतावनी लागू है। उसका पालन
+    करें।
+  DO_NOT_GO: स्थितियाँ असुरक्षित हैं। समुद्र में न जाएँ।
+  PROCEED_WITH_CAUTION: स्थितियाँ सीमांत हैं। सावधानी से आगे बढ़ें।
+  PROCEED_WITH_CONTEXT: जिन क्षेत्रों का आकलन हो सका, उनमें कोई प्रतिकूल स्थिति नहीं
+    मिली।
+confidence:
+  HIGH: उच्च
+  LOW: निम्न
+  MEDIUM: मध्यम
+domain:
+  FISHING_SUITABILITY: मछली पकड़ने की उपयुक्तता
+  REGULATORY: नियामक
+  SAFETY: सुरक्षा
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: क्लोरोफिल अनुपात
+  contiguous_zone: contiguous zone
+  current_speed: धारा की गति
+  cyclone_distance_km: चक्रवात से दूरी
+  fishing_regulation_zone: fishing regulation zone
+  internal_waters: internal waters
+  lightning: बिजली
+  marine_protected_area: marine protected area
+  maritime_boundaries: maritime boundaries
+  maritime_boundary: maritime boundary
+  official_warning_status: आधिकारिक चेतावनी
+  pfz_advisory: मत्स्य क्षेत्र सलाह
+  pfz_distance_km: मत्स्य क्षेत्र से दूरी
+  restricted_zone: restricted zone
+  seasonal_closure: seasonal closure
+  significant_wave_height: लहर की ऊँचाई
+  sst_anomaly_abs: sea surface temperature anomaly
+  swell_height: स्वेल ऊँचाई
+  territorial_sea: प्रादेशिक समुद्र
+  thermal_front_distance_km: distance to thermal front
+  wind_gust: हवा का झोंका
+  wind_speed: हवा की गति
+geofence:
+  approaching: आप {name} {boundary} के पास आ रहे हैं — {distance} किमी दूर।
+  inside_constraining: आप {name} {boundary} के अंदर हैं।
+  leaving: आप {name} {boundary} से बाहर निकलने वाले हैं — किनारे से {distance} किमी।
+intent:
+  boundary_check:
+  - सीमा
+  cyclone_status:
+  - चक्रवात
+  - तूफान
+  fishing_suitability:
+  - मछली
+  - मछली पकड़
+  - मत्स्य
+  ocean_condition:
+  - मौसम
+  - समुद्र
+  - लहर
+  - हवा
+  route_optimization:
+  - मार्ग
+  - रास्ता
+  - यात्रा
+  safety_check:
+  - सुरक्षित
+  - सुरक्षा
+  warning_lookup:
+  - चेतावनी
+phrase:
+  assessment_base: '{domain}: {verdict} (विश्वसनीयता {confidence})'
+  disclaimer: यह एक ORCA आकलन है, आधिकारिक सलाह नहीं। IMD और INCOIS बुलेटिन का पालन
+    करें।
+  limiting_factor: ; निर्णायक कारक {factor}, {val}
+  missing_required: ; {missing} उपलब्ध न होने के कारण कोई निर्णय जारी नहीं किया गया
+  not_checked: '  जाँच नहीं की गई: {not_checked}.'
+  verdict_capped_by: ; {capped} की जाँच न हो पाने के कारण इसी स्तर पर सीमित
+place:
+  कन्याकुमारी: kanyakumari
+  कोच्चि: kochi
+  कोलकाता: kolkata
+  गोवा: goa
+  चेन्नई: chennai
+  मंगलुरु: mangalore
+  मुंबई: mumbai
+  विशाखापत्तनम: visakhapatnam
+reason:
+  AUTH_REQUIRED: अनुमति आवश्यक
+  DATASET_UNAVAILABLE: डेटासेट उपलब्ध नहीं
+  INSUFFICIENT_COVERAGE: अपर्याप्त कवरेज
+  NOT_IMPLEMENTED: स्रोत उपलब्ध नहीं
+  NOT_RETRIEVED: प्राप्त नहीं हुआ
+  REPRESENTATIVENESS_MISMATCH: असंगत डेटा
+  STALE_DATA: पुराना डेटा
+time:
+  evening:
+  - शाम
+  morning:
+  - सुबह
+  now:
+  - अभी
+  today:
+  - आज
+  tomorrow:
+  - कल
+value:
+  inside: अंदर
+  outside: बाहर
+verdict:
+  FAVOURABLE: अनुकूल
+  INSUFFICIENT_EVIDENCE: अपर्याप्त प्रमाण
+  MARGINAL: सीमांत
+  PERMITTED: अनुमत
+  PROHIBITED: निषिद्ध
+  RESTRICTED: प्रतिबंधित
+  UNFAVOURABLE: प्रतिकूल
+  UNKNOWN: अज्ञात
+  UNSAFE: असुरक्षित

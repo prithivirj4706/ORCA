@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..schemas.assessment import Assessment
+from ..schemas.assessment import Assessment, Evidence
 from ..schemas.enums import (
     Confidence, Disposition, Domain, RegulatoryStatus, Verdict,
 )
@@ -28,7 +28,15 @@ _CATEGORY = {
     Verdict.UNSAFE: "DO_NOT_PROCEED",
     Verdict.UNFAVOURABLE: "ADVISE_AGAINST",
     Verdict.MARGINAL: "PROCEED_WITH_CAUTION",
+    # 12 section 11 does not name a category for REGULATORY RESTRICTED. Entering
+    # another state's waters without authorisation is not a safety condition and
+    # not a prohibition, but it is emphatically not "proceed with context".
+    RegulatoryStatus.RESTRICTED: "PROCEED_WITH_CAUTION",
 }
+
+#: Regulatory outcomes that constrain action regardless of the weather, and
+#: therefore outrank a safety refusal in the headline.
+_CONSTRAINING_REGULATORY = (RegulatoryStatus.PROHIBITED, RegulatoryStatus.RESTRICTED)
 
 
 @dataclass(slots=True)
@@ -41,9 +49,53 @@ class Synthesis:
     disposition: Disposition
 
 
-def synthesise(assessments: list[Assessment]) -> Synthesis:
+def _statement(a: Assessment, evidence: dict[str, Evidence]) -> str | None:
+    """The evidence sentence behind an assessment's limiting driver.
+
+    `Driver.evidence_id` exists for exactly this link, so the headline can name
+    WHICH boundary or value drove the outcome without re-deriving it.
+    """
+    driver = next((d for d in a.drivers if d.contribution == "limiting"), None)
+    if driver is None or driver.evidence_id is None:
+        return None
+    ev = evidence.get(driver.evidence_id)
+    return ev.statement if ev else None
+
+
+def synthesise(assessments: list[Assessment],
+               evidence: list[Evidence] | None = None) -> Synthesis:
     by_domain = {a.domain: a for a in assessments}
     safety = by_domain.get(Domain.SAFETY)
+    ev_by_id = {e.evidence_id: e for e in (evidence or [])}
+
+    # A regulatory constraint holds whatever the weather does, so it is settled
+    # before the safety branch. 12 section 8 puts REGULATORY(PROHIBITED) above
+    # SAFETY(UNSAFE) in the priority order, and a safety refusal must not hide it.
+    reg = by_domain.get(Domain.REGULATORY)
+    if reg is not None and reg.verdict in _CONSTRAINING_REGULATORY:
+        prohibited = reg.verdict is RegulatoryStatus.PROHIBITED
+        detail = _statement(reg, ev_by_id)
+        headline = ("Do not go. Operating at this location is not permitted "
+                    if prohibited else
+                    "This location is not freely open to you — operating here "
+                    "requires authorisation from the state concerned ")
+        headline += "(advisory information, not a legal determination)."
+        if detail:
+            headline += f" {detail[0].upper()}{detail[1:]}."
+        disposition = (Disposition.REVIEW_REQUIRED if prohibited
+                       else Disposition.AUTO_RELEASE)
+        if safety is not None and safety.verdict is Verdict.INSUFFICIENT_EVIDENCE:
+            headline += (" Sea conditions could not be assessed either, so this "
+                         "is not a statement that conditions are otherwise fine.")
+            # Naming the regulatory constraint does not answer the safety
+            # question, so the safety block stands: the strictest disposition
+            # governs (12 section 12).
+            disposition = Disposition.BLOCKED
+        return Synthesis(
+            category=_CATEGORY[reg.verdict],
+            headline=headline, limiting_domain=Domain.REGULATORY,
+            limiting_factor=reg.limiting_factor, confidence=reg.confidence,
+            disposition=disposition)
 
     # A safety question with no safety verdict is answered by refusing, not by
     # reporting the other domains as if they were the answer.

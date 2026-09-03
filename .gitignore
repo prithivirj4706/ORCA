@@ -22,3 +22,11 @@ __pycache__/
 scratch/
 *.log
 config/tls/incois_bundle.pem
+
+# versioned boundary snapshots -- regenerate with scripts/capture_boundaries.py
+data/boundaries/
+
+# runtime conversation checkpoints (regenerated; never source)
+backend/orca/data/*.db
+backend/orca/data/*.db-shm
+backend/orca/data/*.db-wal

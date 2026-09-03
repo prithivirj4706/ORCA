@@ -481,10 +481,9 @@ the subsetting and download services, but **not** of the ARCO (Zarr) object stor
 | ARCO data chunk `VHM0/0.0.0` | **200**, 521,648 bytes |
 | `s3.waw3-1.cloudferro.com/mdl-arco-time-001` (bucket root) | 403 — listing denied, object reads permitted |
 
-Revised status: **CONFIRMED (ARCO store, no credentials observed)** for the datasets
-below; AUTH REQUIRED remains recorded for the subsetting/download services. Credentials
-are still supported by the adapter and used when configured; their absence is not
-treated as a failure.
+Initial reading (revised — see §15.5): *CONFIRMED (ARCO store, no credentials
+observed)*. **That correction was too strong and is superseded below.** Credentials are
+supported by the adapter and used when configured.
 
 ### 15.2 Datasets bound (ids and variables read from the public STAC catalogue)
 
@@ -521,3 +520,158 @@ window.
 The remaining blocker for a SAFETY verdict is **`official_warning_status`**, which has no
 substitute by design — an official warning cannot be synthesised from model fields.
 
+### 15.5 Correction to §15.1 — unauthenticated ARCO access is only partly reliable
+
+Later in the same session, data chunks that had previously returned 200 began returning
+`403 AccessDenied`. Re-tested at end of session:
+
+| Product | Bucket | Data chunk | Behaviour across the session |
+|---|---|---|---|
+| Waves `GLOBAL_ANALYSISFORECAST_WAV_001_027` | `arco-time-015` | **200** | reliable throughout |
+| Currents `GLOBAL_ANALYSISFORECAST_PHY_001_024` | `arco-time-015` | **200** | reliable throughout |
+| SST `METOFFICE-GLO-SST-L4-NRT-OBS-SST-V2` | `arco-time-045` | **403** | worked initially, later intermittent |
+| Chlorophyll `...plankton_nrt_l4-gapfree-multi-4km_P1D` | `arco-time-044` | **403** | worked initially, later denied |
+| Wind `cmems_obs-wind_glo_phy_nrt_l4_0.125deg_PT1H` | `arco-time-050` | **403** | worked initially, later denied |
+
+Coordinate arrays and `.zmetadata` remain readable on every bucket; only the **data**
+chunks are affected.
+
+| ID | Finding |
+|---|---|
+| **F-13** | A denied request and a nonexistent key return an **identical** `AccessDenied` body on these buckets (verified against a deliberately nonsensical key). HTTP status and body therefore **cannot distinguish "missing chunk" from "access denied"**. Since Zarr legitimately omits all-fill chunks, this is a genuine ambiguity in the protocol as CMEMS deploys it. |
+| **F-14** | The same chunk returned 200 early in the session and 403 later, which points to throttling or a quota on unauthenticated egress rather than a static policy. |
+
+**Engineering consequence.** ORCA treats `404` as an omitted chunk (absent) and `403` as
+a **failure**, never as absence. Reading a denial as "no data" would silently drop real
+observations and could present a masked sea as a calm one. This costs availability and
+buys correctness, which is the right trade for a system that makes safety statements.
+
+**Revised status for S-07:**
+
+> **AUTH REQUIRED** for reliable use. The forecast products (waves, currents) served
+> unauthenticated reads consistently and are usable without credentials today; the
+> observation products (SST, chlorophyll, wind) are not reliable unauthenticated.
+> The audit's original `AUTH REQUIRED` classification was closer to correct than the
+> §15.1 correction. **Obtaining CMEMS credentials is now a priority action**, not an
+> optional enhancement.
+
+---
+
+## 16. Live Verification — MarineRegions (S-08), 2026-09-02
+
+### 16.1 Access
+
+`https://geo.vliz.be/geoserver/MarineRegions/wfs` answered **unauthenticated**:
+`GetCapabilities` HTTP 200 (164 kB, 100+ layers advertised), `DescribeFeatureType`
+HTTP 200, `GetFeature` with `outputFormat=application/json` HTTP 200. §5 recorded S-08
+as CONFIRMED reachable; that is now verified all the way to feature geometry. No
+credentials are configured or required.
+
+Licence: VLIZ Maritime Boundaries Geodatabase, CC-BY 4.0. Attribution is mandatory and
+is carried on every provenance record. `14_SECURITY_PRIVACY_AND_GOVERNANCE.md` §"terms"
+still calls for a licence review; the attribution string is in place meanwhile.
+
+### 16.2 Layers bound (ids and versions read from the service, not guessed)
+
+| Boundary type | Layer | Version published in the layer title |
+|---|---|---|
+| EEZ | `MarineRegions:eez` | Exclusive Economic Zones (200 NM) **(v12, world, 2023)** |
+| territorial_sea | `MarineRegions:eez_12nm` | Territorial Seas (12 NM) **(v4, world, 2023)** |
+| contiguous_zone | `MarineRegions:eez_24nm` | Contiguous Zones (24 NM) **(v4, world, 2023)** |
+| internal_waters | `MarineRegions:eez_internal_waters` | Internal Waters **(v4, world, 2023)** |
+
+**No boundary type outside this list has a configured source.** Marine protected areas,
+restricted and naval zones, fishing regulation zones and seasonal closures return
+`DATASET_UNAVAILABLE` and are listed as not evaluated in every answer.
+
+The captured snapshot (region lat 0–26 N, lon 64–90 E) holds 8 EEZ, 5 territorial-sea,
+5 contiguous-zone and 3 internal-waters features — 458,706 vertices, 7.2 MB — read in
+11.9 MB over 5 requests.
+
+### 16.3 Findings
+
+| ID | Finding | Consequence |
+|---|---|---|
+| **F-15** | The layers declare `urn:ogc:def:crs:EPSG::4326`, whose authority axis order is **latitude, longitude**. `BBOX(the_geom,60,-2,100,26)` is read as lat 60–100, lon -2–26 and returns Norway, Svalbard and the Russian Arctic. | Every bbox is emitted lat, lon, lat, lon. The first capture attempt silently returned the wrong hemisphere; the failure mode is a plausible-looking non-empty result, which is the dangerous kind. |
+| **F-16** | Features crossing the antimeridian (Kiribati, Hawaii) have envelopes spanning −180…180, so they match *any* bbox query. | Bounding-box prefiltering is done per **ring**, not per feature, and rings that cross the antimeridian are normalised into a continuous 0–360 frame at capture time. Both features are returned by an Indian Ocean bbox and correctly contain nothing. |
+| **F-17** | `eez_12nm` and `eez_24nm` are **bands measured from the baseline, not nested discs**. A point 5 NM offshore is inside the territorial sea and *outside* the contiguous zone; a point 20 NM offshore is the reverse. | Boundary types are evaluated independently and combined by "most constraining governs". Treating them as nested would produce a wrong answer in both directions. |
+| **F-18** | `eez_internal_waters` publishes **no feature for Sri Lanka or the Maldives**. A point in Sri Lankan waters therefore falls outside every internal-waters polygon in the snapshot. | That is a gap in the source, not a finding about the point. The adapter detects that the layer holds nothing for the governing jurisdiction and downgrades the result to *not evaluated for this jurisdiction*, so a missing polygon can never read as "not in internal waters". |
+| **F-19** | The service publishes **no version field**. The release is stated only in the layer title, e.g. *"(v12, world, 2023)"*, and only to year precision. | The title is parsed and recorded; `capture_boundaries.py` **fails** rather than writing a snapshot it cannot version. Effective dates are recorded to year precision, and provenance says so. |
+| **F-20** | The full-precision Indonesian EEZ alone is 1.7 M vertices (81 % of an Indian Ocean bbox query). | The default snapshot region stops at 90 E, which excludes it. Positions east of 90 E — including the Andaman and Nicobar waters — are outside the snapshot and return `INSUFFICIENT_COVERAGE` until the capture is re-run with a wider region. |
+
+### 16.4 Consequence for `22_MVP_SCOPE.md`
+
+M-10 ("≥ 3 distinct external sources reached live in one run") is **met**: INCOIS ERDDAP,
+CMEMS and MarineRegions all serve a single run. M-25 ("point-in-polygon boundary
+evaluation with dataset version and `advisory_only`") is **met**.
+
+REGULATORY is the second fully evidenced domain and the only one that needs no forecast,
+no credentials and no network at query time.
+
+---
+
+## 17. Live Verification — INCOIS GeoServer (S-06) and the tide search, 2026-09-03
+
+### 17.1 S-06 is VERIFIED, at a different endpoint
+
+§S-06 recorded **PENDING VERIFICATION** because the test network could not
+resolve `services.incois.gov.in`. On an unrestricted network that host *still*
+does not resolve — but `incois.gov.in/geoserver` answers `GetCapabilities` with
+**342 layers**, including the PFZ set. The verification is closed; the endpoint
+in the audit was wrong, not merely unreachable.
+
+| Endpoint | Result |
+|---|---|
+| `services.incois.gov.in/geoserver` | does not resolve |
+| `incois.gov.in/geoserver/wms` `GetCapabilities` | **200**, 446 kB, 342 layers |
+| `wfs` `GetCapabilities` and `GetFeature` | **403 Forbidden** |
+| `wms` `GetFeatureInfo` (`application/json`) | **200**, real GeoJSON geometry |
+| `wms` `GetMap` | **200**, renders |
+
+### 17.2 The open question answered: PFZ is VECTOR
+
+§S-06 asked whether PFZ geometry is retrievable or whether the layer is imagery
+only, and the design carried a `RASTER_ONLY` branch for it. **That branch is not
+needed.** WFS is closed, but `GetFeatureInfo` returns `MultiLineString` geometry
+with attributes, so a spatial search is expressed as a `GetFeatureInfo` with a
+bbox and a pixel `BUFFER` acting as the search radius.
+
+Layers bound:
+
+| Purpose | Layer | Extent |
+|---|---|---|
+| PFZ advisory lines | `PFZ_Automation:pfzlines` | 11.64–23.06 N, 67.15–93.37 E |
+| Named advisory sectors | `PFZ_Sectors:sector_new` | 6.35–23.76 N, 67.88–94.78 E |
+
+| ID | Finding |
+|---|---|
+| **F-30** | The PFZ layer carries **no time dimension**: the server serves whatever issue is current, and the issue date lives in each feature as `Year` + `Julian_day` (`2026` + `245` = 2 Sep 2026). It must be converted before it can be compared, and an undated or old advisory is flagged rather than presented as today's. |
+| **F-31** | **The current issue's extent starts at 11.64 N, so Kochi has no PFZ advisory today.** That is a fact about the issue, not about the point. "No advisory near you" and "we did not look there" are returned as different outcomes: `NO_DATA` (checked, none in range) versus `INSUFFICIENT_COVERAGE` (outside the extent). |
+| **F-32** | The GeoServer is **intermittently 5xx** (observed several 503s between successful calls). Handled by retry with backoff; a persistent failure degrades to a declared gap. |
+
+### 17.3 Tide — investigated, no reachable source
+
+The problem statement names tide explicitly. Every route was tried on
+2026-09-03:
+
+| Candidate | Result |
+|---|---|
+| UHSLC ERDDAP `global_hourly_fast` | reachable; **Cochin gauge exists at 9.967 N, 76.267 E** — 4 km from the demo point — but `time_coverage_end` is **2026-07-31**, about a month behind |
+| CMEMS STAC | the only tide product is `ARCTIC_ANALYSISFORECAST_PHY_TIDE_002_015` — Arctic only |
+| CMEMS `SEALEVEL_*` | altimetry anomalies, not tidal height |
+| INCOIS `TideGauges:TideGauges` | station **locations** (points), not levels |
+| NOAA CO-OPS | US stations only |
+
+| ID | Finding |
+|---|---|
+| **F-33** | **No reachable source publishes a tide prediction for the Indian coast.** UHSLC is an archive for this purpose, on the same pattern as the INCOIS SST holdings. ORCA will **not** compute its own tide prediction: without published harmonic constituents that would be an authoritative-looking invented number. `get_tides` is therefore a **declared capability with no source**, named in every answer that would have used it. |
+
+**Partial consolation.** Tidal *currents* are already covered: the CMEMS total
+surface current product includes the tidal component, so `current_speed`
+reflects it. Tidal *height* is what is missing.
+
+**Deviation.** `04_ORCA_TOOL_CONTRACTS.md` specifies eleven P0 tools and does not
+include tide, although the problem statement names it. `get_tides` was added to
+the catalogue as a twelfth, declared-unavailable capability, so that an answer
+about "tide, weather and sea conditions" states what it could not check instead
+of quietly answering two thirds of the question.

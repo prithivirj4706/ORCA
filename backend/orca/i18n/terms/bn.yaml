@@ -1,0 +1,113 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: অবস্থা প্রতিকূল।
+  CANNOT_ADVISE: প্রদত্ত সময় ও স্থানের জন্য আমি এটি মূল্যায়ন করতে পারছি না, তাই
+    নিরাপদ কিনা বলব না।
+  DEFER_TO_OFFICIAL: এই এলাকার জন্য সরকারি সামুদ্রিক সতর্কতা জারি আছে। সেটি অনুসরণ
+    করুন।
+  DO_NOT_GO: অবস্থা অনিরাপদ। সমুদ্রে যাবেন না।
+  PROCEED_WITH_CAUTION: অবস্থা প্রান্তিক। সাবধানে এগোন।
+  PROCEED_WITH_CONTEXT: যে ক্ষেত্রগুলি মূল্যায়ন করা গেছে সেখানে কোনো প্রতিকূল অবস্থা
+    পাওয়া যায়নি।
+confidence:
+  HIGH: উচ্চ
+  LOW: নিম্ন
+  MEDIUM: মাঝারি
+domain:
+  FISHING_SUITABILITY: মাছ ধরার উপযোগিতা
+  REGULATORY: নিয়ন্ত্রণ
+  SAFETY: নিরাপত্তা
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: ক্লোরোফিল অনুপাত
+  current_speed: স্রোতের গতি
+  cyclone_distance_km: ঘূর্ণিঝড়ের দূরত্ব
+  lightning: বজ্রপাত
+  maritime_boundary: maritime boundary
+  official_warning_status: সরকারি সতর্কতা
+  pfz_advisory: মৎস্য অঞ্চল পরামর্শ
+  pfz_distance_km: মৎস্য অঞ্চলের দূরত্ব
+  significant_wave_height: ঢেউয়ের উচ্চতা
+  swell_height: স্বেল উচ্চতা
+  territorial_sea: আঞ্চলিক সমুদ্র
+  wind_gust: দমকা হাওয়া
+  wind_speed: বাতাসের গতি
+geofence:
+  approaching: আপনি {name} {boundary} এর কাছে যাচ্ছেন — {distance} কিমি দূরে।
+  inside_constraining: আপনি {name} {boundary} এর ভিতরে আছেন।
+  leaving: আপনি {name} {boundary} ছেড়ে যাচ্ছেন — সীমানা থেকে {distance} কিমি।
+intent:
+  boundary_check:
+  - সীমানা
+  cyclone_status:
+  - ঘূর্ণিঝড়
+  fishing_suitability:
+  - মাছ
+  - মৎস্য
+  ocean_condition:
+  - আবহাওয়া
+  - সমুদ্র
+  - ঢেউ
+  - বাতাস
+  route_optimization:
+  - পথ
+  - রুট
+  - যাত্রা
+  safety_check:
+  - নিরাপদ
+  - নিরাপত্তা
+  warning_lookup:
+  - সতর্কতা
+phrase:
+  assessment_base: '{domain}: {verdict} (নির্ভরযোগ্যতা {confidence})'
+  disclaimer: এটি একটি ORCA মূল্যায়ন, সরকারি পরামর্শ নয়। IMD ও INCOIS বুলেটিন অনুসরণ
+    করুন।
+  limiting_factor: ; নির্ণায়ক উপাদান {factor}, {val}
+  missing_required: ; {missing} না থাকায় কোনো সিদ্ধান্ত দেওয়া হয়নি
+  not_checked: '  যাচাই করা হয়নি: {not_checked}.'
+  verdict_capped_by: ; {capped} যাচাই করা না যাওয়ায় এই স্তরে সীমিত
+place:
+  কন্যাকুমারী: kanyakumari
+  কলকাতা: kolkata
+  কোচি: kochi
+  গোয়া: goa
+  চেন্নাই: chennai
+  বিশাখাপত্তনম: visakhapatnam
+  মুম্বাই: mumbai
+  ম্যাঙ্গালোর: mangalore
+reason:
+  AUTH_REQUIRED: অনুমতি প্রয়োজন
+  DATASET_UNAVAILABLE: ডেটাসেট নেই
+  INSUFFICIENT_COVERAGE: পর্যাপ্ত কভারেজ নেই
+  NOT_IMPLEMENTED: উৎস নেই
+  NOT_RETRIEVED: পাওয়া যায়নি
+  REPRESENTATIVENESS_MISMATCH: অসঙ্গত তথ্য
+  STALE_DATA: পুরনো তথ্য
+time:
+  evening:
+  - সন্ধ্যা
+  morning:
+  - সকাল
+  now:
+  - এখন
+  today:
+  - আজ
+  tomorrow:
+  - আগামীকাল
+  - কাল
+value:
+  inside: ভিতরে
+  outside: বাইরে
+verdict:
+  FAVOURABLE: অনুকূল
+  INSUFFICIENT_EVIDENCE: পর্যাপ্ত প্রমাণ নেই
+  MARGINAL: প্রান্তিক
+  PERMITTED: অনুমোদিত
+  PROHIBITED: নিষিদ্ধ
+  RESTRICTED: সীমাবদ্ধ
+  UNFAVOURABLE: প্রতিকূল
+  UNKNOWN: অজানা
+  UNSAFE: অনিরাপদ

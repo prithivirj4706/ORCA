@@ -170,6 +170,59 @@ class CmemsAdapter:
                          for v in vals])
         return vals, binding, times[it], int(vals.size)
 
+    def fetch_grid(self, parameter: str, lat: float, lon: float,
+                   valid_time: datetime, radius_km: float = 200.0):
+        """A rectangular field around a point, WITH its axes and its holes.
+
+        `fetch_local_field` flattens and drops NaNs, which is right for a median
+        and wrong for a map: rendering needs the grid shape, the coordinates,
+        and the masked cells left as gaps. A land-masked or cloud-masked cell
+        must reach the client as null and be drawn as absent -- rendering it as
+        zero would paint a calm sea over missing data (F-10, in pixels).
+
+        Returns (lats, lons, block, binding, actual_time), block[y][x] with NaN
+        where there is no value.
+        """
+        bindings = BINDINGS.get(parameter)
+        if not bindings:
+            raise CmemsError(ErrorCode.DATASET_UNAVAILABLE,
+                             f"no CMEMS binding for parameter {parameter!r}")
+        binding = bindings[0]
+        store = self._store(binding)
+        lats = store.read_coord("latitude")
+        lons = store.read_coord("longitude")
+        times = self._time_axis(store, binding)
+
+        q_lon = lon if lon <= 180.0 else lon - 360.0
+        iy, _ = nearest_index(lats, lat)
+        ix, _ = nearest_index(lons, q_lon)
+        t_arr = np.array([t.timestamp() for t in times])
+        it, _ = nearest_index(t_arr, valid_time.timestamp())
+
+        lat_step_km = abs(float(lats[1] - lats[0])) * 111.32
+        half = max(1, int(radius_km / max(lat_step_km, 1e-6)))
+        # A field big enough to look like a map is a lot of cells; cap it so a
+        # careless radius cannot pull tens of megabytes through the chunk reader.
+        half = min(half, 120)
+
+        meta = store.array(binding.variable)
+        index = {"time": it, "latitude": iy, "longitude": ix}
+        if "elevation" in meta.dims:
+            index["elevation"] = 0
+        block, slices = store.read_window(binding.variable, index,
+                                          {"latitude": half, "longitude": half})
+        block = np.squeeze(block)
+        published_unit = meta.units or binding.canonical_unit
+        if published_unit != binding.canonical_unit:
+            with np.errstate(invalid="ignore"):
+                block = np.vectorize(
+                    lambda v: (np.nan if np.isnan(v)
+                               else U.convert(float(v), published_unit,
+                                              binding.canonical_unit)))(block)
+        out_lats = lats[slices["latitude"]]
+        out_lons = lons[slices["longitude"]]
+        return out_lats, out_lons, block, binding, times[it]
+
     # -- public API ------------------------------------------------------------
 
     def fetch_point(self, parameter: str, lat: float, lon: float,

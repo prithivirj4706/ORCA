@@ -1,0 +1,49 @@
+/* Design tokens and base reset only.
+ *
+ * Everything with a position or a size lives in App.css. Keeping layout out of
+ * here is what stops two stylesheets from fighting over the same class names --
+ * an earlier split had a static .top-bar here and a fixed one there, and the
+ * whole interface rendered invisible underneath the map. */
+:root {
+  --bg-color: #050b14;
+  --bg-panel: rgba(10, 25, 47, 0.72);
+  --bg-panel-2: rgba(14, 29, 46, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #e8f4f8;
+  --text-secondary: #94a3b8;
+  --text-faint: #5b7686;
+  --favourable: #34d399;
+  --marginal: #fbbf24;
+  --unfavourable: #fb923c;
+  --unsafe: #f43f5e;
+  --unknown: #64748b;
+  --primary: #38bdf8;
+  --teal: #4fd1c5;
+  --line: rgba(94, 178, 196, 0.18);
+  --line-2: rgba(94, 178, 196, 0.34);
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  --sans: 'Inter', 'SF Pro Text', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button { font-family: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

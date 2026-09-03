@@ -30,8 +30,13 @@ CADENCE_DAYS: dict[R, float] = {
 #: never drive a verdict for that domain.
 DOMAIN_ACCEPTS: dict[Domain, frozenset[R]] = {
     Domain.SAFETY: frozenset({R.INSTANTANEOUS, R.HOURLY_MEAN, R.BULLETIN_PERIOD}),
+    # BULLETIN_PERIOD is accepted here because the INCOIS PFZ advisory is a
+    # dated bulletin and is the most authoritative fishing input ORCA has.
+    # Excluding it downgraded the official product to "context only" while a
+    # derived chlorophyll ratio drove the verdict, which is backwards.
     Domain.FISHING_SUITABILITY: frozenset({
         R.INSTANTANEOUS, R.HOURLY_MEAN, R.DAILY_COMPOSITE, R.THREE_DAY_MEAN,
+        R.BULLETIN_PERIOD,
     }),
     Domain.ECOLOGICAL: frozenset({
         R.DAILY_COMPOSITE, R.THREE_DAY_MEAN, R.WEEKLY_MEAN,

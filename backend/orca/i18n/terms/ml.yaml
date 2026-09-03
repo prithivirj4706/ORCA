@@ -1,0 +1,123 @@
+_meta:
+  note: verdict vocabulary is safety-critical; needs a native speaker
+  status: TRANSLATION_REVIEW_REQUIRED
+category:
+  AVOID: സാഹചര്യങ്ങൾ പ്രതികൂലമാണ്.
+  CANNOT_ADVISE: നൽകിയ സമയത്തിനും സ്ഥലത്തിനും ഇത് വിലയിരുത്താൻ കഴിയില്ല, അതിനാൽ സുരക്ഷിതമാണോ
+    എന്ന് പറയില്ല.
+  DEFER_TO_OFFICIAL: ഈ പ്രദേശത്ത് ഔദ്യോഗിക സമുദ്ര മുന്നറിയിപ്പ് നിലവിലുണ്ട്. അത് പിന്തുടരുക.
+  DO_NOT_GO: സാഹചര്യങ്ങൾ സുരക്ഷിതമല്ല. കടലിൽ പോകരുത്.
+  PROCEED_WITH_CAUTION: സാഹചര്യങ്ങൾ ശരാശരിയാണ്. ജാഗ്രത പാലിക്കുക.
+  PROCEED_WITH_CONTEXT: വിലയിരുത്താൻ കഴിഞ്ഞ മേഖലകളിൽ പ്രതികൂല സാഹചര്യങ്ങളൊന്നും കണ്ടെത്തിയില്ല.
+confidence:
+  HIGH: ഉയർന്നത്
+  LOW: കുറവ്
+  MEDIUM: ഇടത്തരം
+domain:
+  FISHING_SUITABILITY: മത്സ്യബന്ധന അനുയോജ്യത
+  REGULATORY: നിയന്ത്രണം
+  SAFETY: സുരക്ഷ
+factor:
+  EEZ: EEZ
+  chlorophyll_ratio: chlorophyll ratio
+  chlorophyll_ratio_to_local_median: ക്ലോറോഫിൽ അനുപാതം
+  contiguous_zone: contiguous zone
+  current_speed: പ്രവാഹ വേഗത
+  cyclone_distance_km: ചുഴലിക്കാറ്റിലേക്കുള്ള ദൂരം
+  fishing_regulation_zone: fishing regulation zone
+  internal_waters: internal waters
+  lightning: മിന്നൽ
+  marine_protected_area: marine protected area
+  maritime_boundaries: maritime boundaries
+  maritime_boundary: maritime boundary
+  official_warning_status: ഔദ്യോഗിക മുന്നറിയിപ്പ്
+  pfz_advisory: മത്സ്യബന്ധന മേഖലാ നിർദ്ദേശം
+  pfz_distance_km: മത്സ്യബന്ധന മേഖലയിലേക്കുള്ള ദൂരം
+  restricted_zone: restricted zone
+  seasonal_closure: seasonal closure
+  significant_wave_height: തിരമാലയുടെ ഉയരം
+  sst_anomaly_abs: sea surface temperature anomaly
+  swell_height: സ്വെൽ ഉയരം
+  territorial_sea: പ്രാദേശിക സമുദ്രം
+  thermal_front_distance_km: distance to thermal front
+  wind_gust: കാറ്റിന്റെ ശക്തി
+  wind_speed: കാറ്റിന്റെ വേഗത
+geofence:
+  approaching: നിങ്ങൾ {name} {boundary} സമീപിക്കുന്നു — {distance} കി.മീ അകലെ.
+  inside_constraining: നിങ്ങൾ {name} {boundary} ഉള്ളിലാണ്.
+  leaving: നിങ്ങൾ {name} {boundary} വിട്ടുപോകാറായി — അതിർത്തിയിൽ നിന്ന് {distance}
+    കി.മീ.
+intent:
+  boundary_check:
+  - അതിർത്തി
+  cyclone_status:
+  - ചുഴലിക്കാറ്റ്
+  - കൊടുങ്കാറ്റ്
+  fishing_suitability:
+  - മീൻ
+  - മത്സ്യ
+  - മീൻപിടി
+  ocean_condition:
+  - കാലാവസ്ഥ
+  - കടൽ
+  - തിര
+  - കാറ്റ്
+  route_optimization:
+  - വഴി
+  - മാർഗം
+  - യാത്ര
+  safety_check:
+  - സുരക്ഷ
+  - സുരക്ഷിത
+  - പോകാമോ
+  warning_lookup:
+  - മുന്നറിയിപ്പ്
+phrase:
+  assessment_base: '{domain}: {verdict} (വിശ്വാസ്യത {confidence})'
+  disclaimer: ഇത് ഒരു ORCA വിലയിരുത്തലാണ്, ഔദ്യോഗിക മുന്നറിയിപ്പല്ല. IMD, INCOIS ബുള്ളറ്റിനുകൾ
+    പിന്തുടരുക.
+  limiting_factor: ; നിർണായക ഘടകം {factor}, {val}
+  missing_required: ; {missing} ലഭ്യമല്ലാത്തതിനാൽ വിധി പ്രസ്താവിച്ചിട്ടില്ല
+  not_checked: '  പരിശോധിച്ചിട്ടില്ല: {not_checked}.'
+  verdict_capped_by: ; {capped} പരിശോധിക്കാൻ കഴിയാത്തതിനാൽ ഈ നിലയിൽ പരിമിതപ്പെടുത്തി
+place:
+  കന്യാകുമാരി: kanyakumari
+  കൊച്ചി: kochi
+  കൊൽക്കത്ത: kolkata
+  ഗോവ: goa
+  ചെന്നൈ: chennai
+  മംഗളൂരു: mangalore
+  മുംബൈ: mumbai
+  വിശാഖപട്ടണം: visakhapatnam
+reason:
+  AUTH_REQUIRED: അനുമതി ആവശ്യം
+  DATASET_UNAVAILABLE: ഡാറ്റാസെറ്റ് ലഭ്യമല്ല
+  INSUFFICIENT_COVERAGE: അപര്യാപ്ത കവറേജ്
+  NOT_IMPLEMENTED: ഉറവിടം ലഭ്യമല്ല
+  NOT_RETRIEVED: ലഭ്യമായില്ല
+  REPRESENTATIVENESS_MISMATCH: അനുയോജ്യമല്ലാത്ത ഡാറ്റ
+  STALE_DATA: പഴയ ഡാറ്റ
+time:
+  evening:
+  - വൈകുന്നേരം
+  morning:
+  - രാവിലെ
+  now:
+  - ഇപ്പോൾ
+  today:
+  - ഇന്ന്
+  tomorrow:
+  - നാളെ
+value:
+  inside: അകത്ത്
+  outside: പുറത്ത്
+verdict:
+  FAVOURABLE: അനുകൂലം
+  INSUFFICIENT_EVIDENCE: മതിയായ തെളിവില്ല
+  MARGINAL: ശരാശരി
+  PERMITTED: അനുവദനീയം
+  PROHIBITED: നിരോധിതം
+  RESTRICTED: നിയന്ത്രിതം
+  UNFAVOURABLE: പ്രതികൂലം
+  UNKNOWN: അജ്ഞാതം
+  UNSAFE: സുരക്ഷിതമല്ല
